@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Mar 19 11:30:17 2023
+
+@author: arturoaltamirano808
+"""
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  header, section, aside, footer {
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid white;
+  }
+</style>
+
+<header>
+  <code>About;</code>
+</header>
+
+<section>
+  <code>This is a group project. It is written in Flask, a Web App development framework. 
+        Flask utlizes a Jinja2 templating system that allows for object oriented and simple
+        applications. It is entirely written by hand.</code>
+</section>
+
+<aside>
+  <code>The main issues that were faced during this applications development process were
+        largely associated to syntax and templating issues.</code>
+</aside>
+
+<footer>
+  <code>Thank you for taking time to interact with this application.</code>
+</footer>
+
+
+{% endblock %}

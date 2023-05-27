@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar 16 23:20:33 2023
+
+@author: arturoaltamirano808
+"""
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="text-align: center; display: inline-block; padding: 10px; width: 100%; height: auto;">
+    <style>
+        h3{
+            color: white;
+            text-align: center;
+        }
+        button input[type="submit"]{
+            background-color: transparent;
+            border:none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <h3>Are you a manager or customer?</h3>
+    <form method="post" action="/">
+        <button>
+            <input type="submit" value="Customer" name="action1"/>
+        </button>
+        <button>
+            <input type="submit" value="Manager" name="action2" />
+        </button>
+    </form>
+</div>
+
+
+{% endblock %}
