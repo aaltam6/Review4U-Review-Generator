@@ -17,12 +17,13 @@ import mysql.connector
 
 app = Flask(__name__)
 
+#Retrieve API keys from environment variables passed dynamically.
 openai.api_key = os.getenv('gpt_api')
 app.secret_key = os.getenv('application_key')
 email_password = os.getenv('email_api')
 
 class ManagerForm(Form):
-    #define two classes for manager and customer to seperate required validators. 
+    #Manager form class, defines variables as select fields or input fields.
     location = SelectField('Select Field', validators=[DataRequired()], validate_choice=False,choices=[])
     customer = StringField('customer', validators=[InputRequired()])
     manager = SelectField('Select Field', validators=[DataRequired()], validate_choice=False,choices=[])
@@ -31,29 +32,36 @@ class ManagerForm(Form):
     descriptor = StringField('descriptor', validators=[InputRequired()])
 
 class CustomerForm(Form):
-    #define two classes for manager and customer to seperate required validators. 
+    #Customer form class, defines variables as input fields.
+    #Input fields for customer are all string inputs so as to demo the flexibility of the API call.
     location = StringField('location', validators=[InputRequired()])
     email = StringField('email', validators=[InputRequired()])
     order = StringField('order', validators=[InputRequired()])
     descriptor = StringField('descriptor', validators=[InputRequired()])
 
 class HomeForm(Form):
+    #User sign-in form.
     user = StringField('user', validators=[InputRequired()])
     password = StringField('password', validators=[InputRequired()])
     
 class MyForm(Form):
+    #User status selection.
     action1 = SubmitField('Customer')
     action2 = SubmitField('Manager')
-    
+
+#MySQL Connection    
 cnx = mysql.connector.connect(user=os.getenv('RDS_USERNAME'), password=os.getenv('RDS_PASSWORD'),
                       host=os.getenv('RDS_HOSTNAME'),
                       database=os.getenv('RDS_DB_NAME'))
 
+#Define cursor for use by mysql.connector 
 cursor = cnx.cursor()
 
+#Select manager credentials for sign in.
 cursor.execute('SELECT managerID,pass FROM managers')
 result_set = cursor.fetchall()
 
+#Select menu items to be presented from within dropdown later.
 cursor.execute('SELECT itemID FROM item')
 results = cursor.fetchall()
 
@@ -61,7 +69,7 @@ options = [(str(result[0]), str(result[0])) for result in results]
 
 ManagerForm.order.choices = options
 
-
+#Select manager names to be presented from within dropdown later.
 cursor.execute('SELECT managerName FROM managers')
 resultmanagers = cursor.fetchall()
 
