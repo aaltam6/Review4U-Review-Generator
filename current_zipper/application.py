@@ -119,7 +119,6 @@ def writer(location,descriptor,email,customer,reservation,order,response):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    #include locations.html and login and wrote locations.
     form = MyForm()
     if request.method == 'POST':
         if request.form.get('action1') == 'Customer':
@@ -158,15 +157,13 @@ def validator():
 
 @app.route("/about", methods=['GET', 'POST'])
 def about():
-    #add words and shit
+    #short description of the application.
     if request.method == 'GET':
         return render_template('about.html')
     
     
 @app.route('/generator/<location>/<descriptor>/<email>/<customer>/<reservation>/<order>/<route>/<manager>/', methods=['GET', 'POST'])
-def generator(location, descriptor,email,customer,reservation,order,route,manager):
-
-        #Integrate SQL connection and custom prompts for user happiness level.
+def generator(location, descriptor,email,customer,reservation,order,route,manager)
         
         form = Form()
         
