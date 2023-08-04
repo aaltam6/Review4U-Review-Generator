@@ -4,3 +4,4 @@ This flask application generates restaurant reviews utilizing the OpenAI API. Th
 If you would like to see this application in action, navigate to the link below!
 
 http://reviewgenerator-env.eba-qbpqfaz4.us-east-1.elasticbeanstalk.com/
+
