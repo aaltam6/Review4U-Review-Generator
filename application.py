@@ -10,7 +10,7 @@ import os
 import mysql.connector
 
 app = Flask(__name__)
-
+#pass secrets as environment variables
 openai.api_key = os.getenv('gpt_api')
 app.secret_key = os.getenv('app_key')
 email_password = os.getenv('email_api')
@@ -38,6 +38,8 @@ class HomeForm(Form):
 class MyForm(Form):
     action1 = SubmitField('Customer')
     action2 = SubmitField('Manager')
+
+#I have chosen to ommit MySQL connection as it charges you a lot for the saving of output. Uncomment and pass credentials as environment variables to enable.
 
 #cnx = mysql.connector.connect(user=os.getenv('RDS_USERNAME'), password=os.getenv('RDS_PASSWORD'),
                       #host=os.getenv('RDS_HOSTNAME'),
@@ -119,6 +121,7 @@ def home():
 
 @app.route('/validator', methods=['GET', 'POST'])
 def validator():
+    #hard coded password authentication. in a production environment, this would be done via session management. but since this is a demonstration, i will utilize this temporarily.
     form = HomeForm(request.form)
 
     if request.method == 'POST':
@@ -145,6 +148,7 @@ def validator():
 
 @app.route("/about", methods=['GET', 'POST'])
 def about():
+    #display about template
     if request.method == 'GET':
         return render_template('about.html')
 
@@ -157,6 +161,7 @@ def generator(location, descriptor,email,customer,reservation,order,route,manage
         form = Form()
 
         if request.method == 'GET':
+            #OpenAI chat completion prompt, this is the core function for the entire application.
             resp = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 n=1,
@@ -174,6 +179,7 @@ def generator(location, descriptor,email,customer,reservation,order,route,manage
             return render_template('generator.html', response=response, form=form)
 
         else:
+            #email dispatch function
             if 'accept' in request.form:
 
                email_address = "citytester4125@gmail.com"
@@ -188,6 +194,7 @@ def generator(location, descriptor,email,customer,reservation,order,route,manage
                    smtp.login(email_address, email_password)
                    smtp.send_message(msg)
 
+                #MySQL writer call 
                #if route == 'manager':
                    #writer(location,descriptor,email,customer,reservation,order,response)
 
@@ -223,7 +230,6 @@ def manager():
 
 @app.route('/customer', methods=['POST', 'GET'])
 def customer():
-    #potential customer happiness slider bar? Differentiate from manager.
    form = CustomerForm(request.form)
    if request.method == 'POST':
        location = request.form.get('location')
